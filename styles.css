@@ -51,6 +51,13 @@ a:hover {
 }
 #menu li:last-child {
 }
+.examples ul {
+	list-style-type: none;
+	font-size: 0.8em;
+	color: #a0a0a0;
+	font-style: italic;
+}
+
 
 .on {
 	display: block;

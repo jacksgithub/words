@@ -161,4 +161,14 @@ var WORDS = {
 		],
 		'part': 'noun'
 	},
+	'toponym': {
+		'definitions':[
+			'A place name.',
+			'A name derived from a place or region.'
+		],
+		'examples':[
+			''
+		],
+		'part': 'noun'
+	}
 };

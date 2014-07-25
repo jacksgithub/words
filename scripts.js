@@ -95,18 +95,24 @@ function displayWord(word)
 	var elem_section		= document.createElement('section');
 	var elem_word			= document.createElement('div');
 	var elem_part			= document.createElement('div');
+	var elem_examples		= document.createElement('div');
 	elem_section.className 	= 'container';
-	elem_word.className 	= 'word';
-	elem_part.className 	= 'part';
+	elem_word.className		= 'word';
+	elem_part.className		= 'part';
+	elem_examples.className = 'examples';
 
 	elem_word.innerHTML 	= word;
 	elem_part.innerHTML 	= WORDS[word]['part'];
-	var defs				= WORDS[word]['definitions'];
+	var defs					= WORDS[word]['definitions'];
+	var examples			= WORDS[word]['examples'];
 
 	elem_section.appendChild(elem_word);
 	elem_section.appendChild(elem_part);
 
-	createDefList(defs, elem_section);
+	createList(defs, elem_section);
+	createList(examples, elem_examples);
+
+	elem_section.appendChild(elem_examples);
 
 	container.appendChild(elem_section);
 
@@ -127,14 +133,14 @@ function displayAll()
 		displayWord(i);
 };
 
-function createDefList(defs, elem_section)
+function createList(items, elem_section)
 {
 	var ul				= document.createElement('ul');		
 
-	for (var i = 0; i < defs.length; i++)
+	for (var i = 0; i < items.length; i++)
 	{
 		var li 			= document.createElement('li');
-		li.innerHTML 	= defs[i];
+		li.innerHTML 	= items[i];
 		ul.appendChild(li);
 	};	
 	elem_section.appendChild(ul);
