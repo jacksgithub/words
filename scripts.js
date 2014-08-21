@@ -1,16 +1,16 @@
-
 (function(){
 
 // **************************************************************************
 // var declarations
 // **************************************************************************
-var cl 			= function(input) {	console.log(input); };	// debug
+var cl				= function(input) {	console.log(input); };	// debug
 
-var body 		= document.getElementsByTagName("body")[0];
-var container	= document.getElementById('wrapper');
-var words 		= [];	// words from WORDS JSON
-var wh 			= [];	// word history
-var cursor		= -1;	// current spot in word history; -1 start for 0-index
+var body				= document.getElementsByTagName("body")[0];
+var container		= document.getElementById('wrapper');
+var form_wrapper	= document.getElementById('form-wrapper');
+var words			= [];	// words from WORDS JSON
+var wh				= [];	// word history
+var cursor			= -1;	// current spot in word history; -1 start for 0-index
 
 
 // **************************************************************************
@@ -30,6 +30,7 @@ displayWord( randomWord() );
 // **************************************************************************
 // custom functions
 // **************************************************************************
+// menu:start
 function displayMenu()
 {
 	// links: next, previous, all, quiz
@@ -37,9 +38,9 @@ function displayMenu()
 	var a 			= '';
 	var li 			= '';
 	var fn 			= '';
-	var links		= {'new_word':next, 'previous':previous, 'all':all, 'quiz':quiz};
+	var links		= {'new word':newWord, 'previous':previous, 'all':all, 'add word':add, 'quiz':quiz};
 
-	ul.id			= 'menu';
+	ul.id				= 'menu';
 
 	for (var k in links)
    {
@@ -48,14 +49,25 @@ function displayMenu()
 			a.href      = '#';
 			a.innerHTML = k;
 			fn          = (links[k]);
-			a.onclick   = function(f){ return function(e){ e.preventDefault(); f(); }; }(fn);
+			a.onclick   = function(f){ return function(e)
+			{ 
+				e.preventDefault(); 
+				
+				if ( getStyle(container, 'display') == 'none' )
+				{
+					form_wrapper.style.display = 'none';
+					container.style.display = 'block';
+				};
+
+				f(); 
+			}; }(fn);
 			li.appendChild(a);
 			ul.appendChild(li);
 	};
 	body.insertBefore(ul, container);
 };
 
-function next() 
+function newWord() 
 {
 	var rw = randomWord();
 
@@ -74,10 +86,22 @@ function all()
 {
 	displayAll();
 };
+function add()
+{
+	var display = getStyle(form_wrapper, 'display');
+
+	if (display == 'none')
+	{
+		form_wrapper.style.display = 'block';
+		container.style.display = 'none';
+	}
+};
 function quiz() 
 {
 	cl('quiz ok');
 };
+// menu:end
+
 
 function wordHistory(rw)
 {
@@ -151,6 +175,17 @@ function clearContent()
 	container.innerHTML = '';
 };
 
+function getStyle(elem, style)
+{
+	var css = '';
+
+	if (window.getComputedStyle)
+		css = window.getComputedStyle(elem, null)[style]; // FF
+	else
+		css = elem.currentStyle[style]; // IE
+
+	return css;
+};
 
 /* ****************** QUIZ ****************** */
 function quiz()
