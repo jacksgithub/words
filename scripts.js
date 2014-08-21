@@ -37,24 +37,24 @@ function displayMenu()
 	var a 			= '';
 	var li 			= '';
 	var fn 			= '';
-	var links		= ['new word', 'previous', 'all', 'quiz'];
+	var links		= {'new_word':next, 'previous':previous, 'all':all, 'quiz':quiz};
 
 	ul.id			= 'menu';
 
-	for (var i = 0; i < links.length; i++)
-	{
-		li 			= document.createElement('li');	
-		a 			= document.createElement('a');
-		a.href 		= '#';
-		a.innerHTML = links[i];
-		fn 			= (links[i] == 'new word') ? 'next()' : links[i]+'()';
-		a.onclick	= function(fn){ return function(){ eval(fn); }; }(fn);
-		// using eval not ideal
-		li.appendChild(a);
-		ul.appendChild(li);
-	};		
+	for (var k in links)
+   {
+	      li				= document.createElement('li');
+			a				= document.createElement('a');
+			a.href      = '#';
+			a.innerHTML = k;
+			fn          = (links[k]);
+			a.onclick   = function(f){ return function(e){ e.preventDefault(); f(); }; }(fn);
+			li.appendChild(a);
+			ul.appendChild(li);
+	};
 	body.insertBefore(ul, container);
 };
+
 function next() 
 {
 	var rw = randomWord();
