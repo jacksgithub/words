@@ -1,5 +1,4 @@
-/* Words JSON */
-var WORDS = {
+{
 	"apotheosis": {
 		"definitions":[
 			"the perfect form or example of something", 
@@ -171,4 +170,4 @@ var WORDS = {
 		],
 		"part": "noun"
 	}
-};
+}
