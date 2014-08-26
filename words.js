@@ -6,7 +6,7 @@
 			"elevation to divine status"
 		],
 		"examples":[
-			"this is the literary apotheosis of the shaggy dog story — Thomas Sutcliffe"
+			"this is the literary apotheosis of the shaggy dog story - Thomas Sutcliffe"
 		],
 		"part": "noun"
 	},
@@ -16,7 +16,7 @@
 			"divide, compartmentalize"
 		],
 		"examples":[
-			"now pop culture has been balkanized; it is full of niches, with different groups watching and playing their own things — Richard Corliss"
+			"now pop culture has been balkanized; it is full of niches, with different groups watching and playing their own things - Richard Corliss"
 		],
 		"part": "transitive verb"
 	},
@@ -34,7 +34,7 @@
 			"of, relating to, or being the person or thing for whom or which something is named"
 		],
 		"examples":[
-			"\"Cool Britannia,\" which goes back to Ben and Jerry's eponymous ice cream in Spring 1996, met its sell-by-date within weeks... —Harold Perkin"
+			"\"Cool Britannia,\" which goes back to Ben and Jerry's eponymous ice cream in Spring 1996, met its sell-by-date within weeks... -Harold Perkin"
 		],
 		"part": "adjective"
 	},
@@ -43,7 +43,7 @@
 			"joking or jesting often inappropriately"
 		],
 		"examples":[
-			"Nor was Liebling seriously asserting that his facetious bit of investigation into Tin Pan Alley history constituted a refutation of Sartre's philosophy. —Raymond Sokolov"
+			"Nor was Liebling seriously asserting that his facetious bit of investigation into Tin Pan Alley history constituted a refutation of Sartre's philosophy. -Raymond Sokolov"
 		],
 		"part": "adjective"
 	},
@@ -70,7 +70,7 @@
 	},
 	"limerence":  {
 		"definitions":[
-			"The state of being infatuated or obsessed with another person, typically experienced involuntarily and characterized by a strong desire for reciprocation of one’s feelings but not primarily for a sexual relationship."
+			"The state of being infatuated or obsessed with another person, typically experienced involuntarily and characterized by a strong desire for reciprocation of one's feelings but not primarily for a sexual relationship."
 		],
 		"examples":[
 			"What is destructive is getting married when limerence is the only thing that's drawing you together."

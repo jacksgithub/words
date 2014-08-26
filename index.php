@@ -22,6 +22,15 @@
 	-->
   <div id="wrapper"></div>
 
+<?php
+if ($_GET['msg'] && preg_match('/^[a-zA-Z0-9!\',\s-]+$/',$_GET['msg']))
+{
+	echo '<p id="msg">';
+	echo $_GET['msg'];
+	echo '</p>';
+};
+?>
+
 	<div id="form-wrapper">
 		<form method="get" action="add.php">
 		<p>

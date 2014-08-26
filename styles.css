@@ -97,4 +97,8 @@ a:hover {
 #form-wrapper input[type="submit"] {
 	padding: 5px 7px;
 }
+#msg {
+	text-align: center;
+	font-style: italic;
+}
 /* /form */
