@@ -102,3 +102,8 @@ a:hover {
 	font-style: italic;
 }
 /* /form */
+
+/* quiz */
+.quiz .examples {
+	display: none;
+}

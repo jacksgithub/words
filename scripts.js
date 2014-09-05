@@ -30,9 +30,14 @@ function main(json)
 	var wh				= [];	// word history
 	var cursor			= -1;	// current spot in word history; -1 start for 0-index
 
+	// quiz
+	var qcorrect		= []; // correct words 
+	var qincorrect		= []; // incorrect words
+	var qwc				= 0;	// quiz word count
+	var qword			= ''; // current quiz word
 
 	// **************************************************************************
-	// main functions
+	// main 
 	// **************************************************************************
 
 	// create array of all words 
@@ -48,7 +53,7 @@ function main(json)
 	// **************************************************************************
 	// custom functions
 	// **************************************************************************
-	// menu:start
+	// menu (event handlers & init)
 	function displayMenu()
 	{
 		// links: next, previous, all, quiz
@@ -106,21 +111,42 @@ function main(json)
 	};
 	function add()
 	{
-		var display = getStyle(form_wrapper, 'display');
-
-		if (display == 'none')
-		{
-			form_wrapper.style.display = 'block';
-			container.style.display = 'none';
-		}
+		clearContent();
+		body.className = 'add';
 	};
-	function quiz() 
+	function quiz()
 	{
-		cl('quiz ok');
+		clearContent();
+		newWord();
+      body.className = 'single quiz';
+
+		qword		= wh[cursor];	// get current word from history
+		// get definitions lis
+		var lis	= document.getElementsByClassName('definitions')[0].getElementsByTagName('li');
+		// if only one def use it; otherwise pick a random one
+		var defs	= (lis.length == 1) ? lis[0] : lis[Math.floor(Math.random() * lis.length)];
+
+		// TODO
+		/*
+		select random word
+		if word not in correct / incorrect
+			select addl random defs
+			build radio buttons w/ definitions
+			display random word & defs
+			display addl defs
+			button for next word
+			button for end quiz (display quiz totals)
+		else if total words in quiz less than word total
+			select new random word & back to if
+		else
+			quiz done (display quiz totals)
+		*/
+
 	};
-	// menu:end
+	// end menu
 
 
+	// word display functions
 	function wordHistory(rw)
 	{
 		wh.push(rw);
@@ -161,7 +187,7 @@ function main(json)
 		if (!body.className.match('all|previous'))
 		{
 			wordHistory(word);
-			cursor = wh.length-1;
+			cursor = wh.length-1; // cursor at end of word history
 		};
 	};
 
@@ -174,10 +200,14 @@ function main(json)
 		for (var i in WORDS)
 			displayWord(i);
 	};
+	// end word display functions
 
+
+	// helper functions 
 	function createList(items, elem_section)
 	{
 		var ul				= document.createElement('ul');		
+		ul.className		= 'definitions';
 
 		for (var i = 0; i < items.length; i++)
 		{
@@ -204,17 +234,7 @@ function main(json)
 
 		return css;
 	};
-
-	/* ****************** QUIZ ****************** */
-	function quiz()
-	{
-		// TODO
-		// links: submit
-		// checks: show defs / show words / show either	
-
-		// var: score
-		// array: correct
-		// array: incorrect
-	};
+	// end helper functions
+						
 
 }; // end main
