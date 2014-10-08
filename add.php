@@ -11,7 +11,7 @@ $examples	= trim($_GET['add-examples']);
 $verify		= array();
 $reg_word	= '/^[a-z-]+$/';
 $reg_part	= '/^(noun|verb|adjective)$/';
-$reg_chars	= '/^[a-zA-Z0-9\'"_()*&!?@#$%+\s<>-]{1,500}$/';
+$reg_chars	= '/^[a-zA-Z0-9,.\'"_()*&!?@#$%+\s<>-]{1,500}$/';
 
 $verify['word']		= preg_match($reg_word, $word);
 $verify['part']		= preg_match($reg_part, $part);
