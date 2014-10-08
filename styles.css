@@ -101,6 +101,10 @@ a:hover {
 	text-align: center;
 	font-style: italic;
 }
+
+.add #form-wrapper {
+   display: block;
+	}
 /* /form */
 
 /* quiz */
