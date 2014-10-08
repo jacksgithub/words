@@ -25,8 +25,8 @@ $verify['examples']	= preg_match($reg_chars, $examples);
 // build array for new word parts
 $input = array();
 
-$a_defs		= split('/\n|\r|\n\r|\r\n/', $defs);
-$a_examples	= split('/\n|\r|\n\r|\r\n/', $examples);
+$a_defs		= preg_split('/\n|\r|\n\r|\r\n/', $defs);
+$a_examples	= preg_split('/\n|\r|\n\r|\r\n/', $examples);
 
 $input['part']				= $part;
 $input['definitions']	= $a_defs;
