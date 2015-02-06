@@ -33,8 +33,8 @@ function main(json)
 	// quiz
 	var qcorrect		= []; // correct words 
 	var qincorrect		= []; // incorrect words
-	var qwc				= 0;	// quiz word count
-	var qword			= ''; // current quiz word
+	var qwh				= []; // quiz word history
+
 
 	// **************************************************************************
 	// main 
@@ -116,18 +116,52 @@ function main(json)
 	};
 	function quiz()
 	{
-		clearContent();
-		newWord();
-      body.className = 'single quiz';
+		// TODO: check qwc is still less than total # of words
+		// TODO: add <form> element
 
-		qword		= wh[cursor];	// get current word from history
-		// get definitions lis
-		var lis	= document.getElementsByClassName('definitions')[0].getElementsByTagName('li');
-		// if only one def use it; otherwise pick a random one
-		var defs	= (lis.length == 1) ? lis[0] : lis[Math.floor(Math.random() * lis.length)];
+      clearContent();
+      body.className = 'single quiz quiz-load';
 
-		// TODO
+		var word			= ''; // current word
+		var words		= '';	// words whose definitions are used this question
+		var tmpword		= ''; // tmp word for loop w/ possible (incorrect) definition options 
+		var def			= ''; // one correct def for current word
+		var defs			= []; // possible definitions (only 1 correct)
+		var i				= 1;
+
+		while (qwh[(word = randomWord())] !== undefined)
+			continue;
+		words += ', '+word;	// add to 
+		qwh.push(word);	// add to quiz word history
+
+		def				= WORDS[word]['definitions'][(Math.floor(Math.random() * WORDS[word]['definitions'].length))];
+		defs.push(def);
+
+		while (i < 5)
+		{
+			if (!words.match(tmpword = randomWord()))
+			{
+				var tmpdefs	= WORDS[tmpword]['definitions'];
+				var rand		= Math.floor(Math.random() * tmpdefs.length);
+
+				defs.push(tmpdefs[rand]);
+				i++;
+			};
+		};
+
+		displayWord(word, defs);
+
+		// TODO: update li to radio buttons & add onclick event(s)
+		// TODO: onclick: verify if correct, add to correct/incorrect[], highlight correct answer add (li.answer)
+
+		body.className = body.className.replace(/quiz-load/,'');
+
+
+		// TODO: add buttons to load next word, end quiz & display results, see correct/incorrect, retry incorrect
+
+
 		/*
+		FLOW:
 		select random word
 		if word not in correct / incorrect
 			select addl random defs
@@ -158,7 +192,7 @@ function main(json)
 		return words[rand];
 	};
 
-	function displayWord(word)
+	function displayWord(word, possible_defs)
 	{
 		var elem_section		= document.createElement('section');
 		var elem_word			= document.createElement('div');
@@ -169,9 +203,13 @@ function main(json)
 		elem_part.className		= 'part';
 		elem_examples.className = 'examples';
 
+		if (body.className.match('quiz'))
+			var defs					= possible_defs;
+		else
+			var defs					= WORDS[word]['definitions'];
+		
 		elem_word.innerHTML 	= word;
 		elem_part.innerHTML 	= WORDS[word]['part'];
-		var defs					= WORDS[word]['definitions'];
 		var examples			= WORDS[word]['examples'];
 
 		elem_section.appendChild(elem_word);
@@ -203,7 +241,10 @@ function main(json)
 	// end word display functions
 
 
+
+	// **************************************************************************
 	// helper functions 
+	// **************************************************************************
 	function createList(items, elem_section)
 	{
 		var ul				= document.createElement('ul');		

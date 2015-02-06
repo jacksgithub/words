@@ -101,9 +101,20 @@ a:hover {
 	text-align: center;
 	font-style: italic;
 }
+
+.add #form-wrapper {
+	display: block;
+}
 /* /form */
 
 /* quiz */
-.quiz .examples {
+.quiz .examples,
+.quiz-load .definitions li {
 	display: none;
+}
+.quiz .definitions li {
+	display: list-item;
+}
+.quiz .answer{
+	background-color: #f3ffe8;
 }
