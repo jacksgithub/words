@@ -31,8 +31,9 @@ function main(json)
 	var cursor			= -1;	// current spot in word history; -1 start for 0-index
 
 	// quiz
-	var qcorrect		= []; // correct words 
-	var qincorrect		= []; // incorrect words
+	var qsub				= document.getElementById('quiz-sub');
+	var qwhc				= []; // correct words 
+	var qwhi				= []; // incorrect words
 	var qwh				= []; // quiz word history
 
 
@@ -92,7 +93,7 @@ function main(json)
 
 	function newWord() 
 	{
-		var rw = randomWord();
+		var rw	= randomWord();
 
 		clearContent();
 		body.className = 'single';
@@ -114,16 +115,47 @@ function main(json)
 		clearContent();
 		body.className = 'add';
 	};
+
+	// **************************************************************************
+	// quiz functions
+	// **************************************************************************
 	function quiz()
 	{
-		// TODO: check qwc is still less than total # of words
-		// TODO: add <form> element
+      body.className = 'single quiz-load';
 
+      var next       = document.createElement('a');
+      next.id			= 'quiz-next';
+		next.innerHTML = 'next';
+      next.onclick   = function(){ quizWord(); };
+
+      var end        = document.createElement('a');
+		end.innerHTML	= 'end';
+      end.id			= 'quiz-end';
+      end.onclick		= function(){ quizEnd(); };
+
+		// qsub is global
+		qsub.appendChild(next);
+		qsub.appendChild(end);
+
+		body.className = body.className.replace(/quiz-load/,'quiz');
+
+		quizWord();
+	};
+	function quizWord()
+	{
       clearContent();
-      body.className = 'single quiz quiz-load';
+		var qp = qsub.getElementsByTagName('p');
+		if(qp.length > 0)
+			qp[0].innerHTML = '';
+
+		if (qwh.length == words.length)
+		{
+			var msg = 'End of words.';
+			quizEnd(msg);	
+		};
 
 		var word			= ''; // current word
-		var words		= '';	// words whose definitions are used this question
+		var qwords		= '';	// words whose definitions are used this question
 		var tmpword		= ''; // tmp word for loop w/ possible (incorrect) definition options 
 		var def			= ''; // one correct def for current word
 		var defs			= []; // possible definitions (only 1 correct)
@@ -131,7 +163,7 @@ function main(json)
 
 		while (qwh[(word = randomWord())] !== undefined)
 			continue;
-		words += ', '+word;	// add to 
+		qwords += ', '+word;	// add to 
 		qwh.push(word);	// add to quiz word history
 
 		def				= WORDS[word]['definitions'][(Math.floor(Math.random() * WORDS[word]['definitions'].length))];
@@ -139,7 +171,7 @@ function main(json)
 
 		while (i < 5)
 		{
-			if (!words.match(tmpword = randomWord()))
+			if (!qwords.match(tmpword = randomWord()))
 			{
 				var tmpdefs	= WORDS[tmpword]['definitions'];
 				var rand		= Math.floor(Math.random() * tmpdefs.length);
@@ -151,13 +183,33 @@ function main(json)
 
 		displayWord(word, defs);
 
-		// TODO: update li to radio buttons & add onclick event(s)
-		// TODO: onclick: verify if correct, add to correct/incorrect[], highlight correct answer add (li.answer)
 
-		body.className = body.className.replace(/quiz-load/,'');
+		var ul					= document.getElementsByClassName('definitions')[0];
+		var lis					= ul.getElementsByTagName('li');
+
+		for (var j = 0; j <lis.length; j++)
+		{
+			var a					= document.createElement('a');
+			a.href				= '#';
+			a.className			= 'quiz-answers';
+			a.innerHTML			= lis[j].innerHTML;
+			lis[j].innerHTML	= '';
+
+			a.onclick			= function(e) {
+				e.preventDefault();
+			
+				this.word		= word;	
+				this.correct	= def;
+				quizVerifyAnswer(this.word, this.correct, this.innerHTML);
+			};
+
+			lis[j].appendChild(a);
+		};
 
 
-		// TODO: add buttons to load next word, end quiz & display results, see correct/incorrect, retry incorrect
+
+
+		// TODO: button to display results, see correct/incorrect, retry incorrect, end & exit quiz
 
 
 		/*
@@ -165,7 +217,7 @@ function main(json)
 		select random word
 		if word not in correct / incorrect
 			select addl random defs
-			build radio buttons w/ definitions
+			build links w/ definitions
 			display random word & defs
 			display addl defs
 			button for next word
@@ -177,7 +229,40 @@ function main(json)
 		*/
 
 	};
-	// end menu
+	function quizVerifyAnswer(word, correct, guess)
+	{
+		var html = '';
+
+		if (correct == guess)
+		{
+			html = guess+' <span class="correct">is correct</span>';
+			qwhc.push(word);
+		}
+		else
+		{
+			html = guess+' <span class="incorrect">is incorrect</span>';
+			qwhi.push(word);
+		};
+
+		if (this.p == undefined)
+		{
+			this.p				= document.createElement('p');
+			this.p.className	= 'quiz-msg';
+			qsub.appendChild(this.p);
+		};
+		
+		this.p.innerHTML = html;
+		qwh.push(word);
+	};
+	function quizEnd(msg)
+	{
+		var p			= document.createElement('p');
+		p.className	= 'quiz-msg';
+		p.innerHTML	= msg;
+
+		qsub.appendChild(p);
+	};
+	// end quiz
 
 
 	// word display functions
@@ -192,8 +277,9 @@ function main(json)
 		return words[rand];
 	};
 
-	function displayWord(word, possible_defs)
+	function displayWord(word, definitions)
 	{
+		var defs					= definitions || WORDS[word]['definitions'];
 		var elem_section		= document.createElement('section');
 		var elem_word			= document.createElement('div');
 		var elem_part			= document.createElement('div');
@@ -203,11 +289,6 @@ function main(json)
 		elem_part.className		= 'part';
 		elem_examples.className = 'examples';
 
-		if (body.className.match('quiz'))
-			var defs					= possible_defs;
-		else
-			var defs					= WORDS[word]['definitions'];
-		
 		elem_word.innerHTML 	= word;
 		elem_part.innerHTML 	= WORDS[word]['part'];
 		var examples			= WORDS[word]['examples'];

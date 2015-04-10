@@ -22,6 +22,8 @@
 	-->
   <div id="wrapper"></div>
 
+	<div id="quiz-sub"></div>
+
 <?php
 if ($_GET['msg'] && preg_match('/^[a-zA-Z0-9!\'",\s-]+$/',$_GET['msg']))
 {

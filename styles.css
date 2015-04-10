@@ -30,7 +30,6 @@ a:hover {
 	font-weight: bold;
 }
 #part, .part {
-	font-size: 0.75em;
 	color: #ababab;
 }
 #definitions, .definitions {
@@ -67,14 +66,14 @@ a:hover {
 }
 
 
-/* form */
+/* form *************************** */
 #form-wrapper {
 	font-size: 0.8em;	
 	text-align: center;
 	display: none;
 	z-index: 1;
 }
-#form-wrapper form {
+#form-wrapper form, #quiz-sub {
 	max-width: 350px;
 	margin-left: auto;
 	margin-right: auto;
@@ -107,7 +106,9 @@ a:hover {
 }
 /* /form */
 
-/* quiz */
+
+
+/* quiz *************************** */
 .quiz .examples,
 .quiz-load .definitions li {
 	display: none;
@@ -117,4 +118,29 @@ a:hover {
 }
 .quiz .answer{
 	background-color: #f3ffe8;
+}
+#quiz-sub {
+	text-align: center;
+}
+#quiz-sub a {
+	display: inline-block;
+	width: 100px;
+	margin: 10px 30px;
+	border: 1px solid #eee;
+}
+#quiz-sub a:hover {
+	cursor: pointer;
+	text-decoration: none;
+	color: #fff;
+	background-color: pink;
+}
+.quiz-msg { 
+	color: #000;
+   font-size: 0.75em;
+}
+.correct {
+	color: green;
+}
+.incorrect {
+	color: red;
 }
