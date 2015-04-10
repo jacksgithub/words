@@ -1,4 +1,6 @@
-Display words from a JSON file.
+Display dictionary words from a JSON file.
 
-// TODO: Form to add words.
-// TODO: Add quiz for words.
+Add words to JSON file.
+
+Quiz on word definitions.
+
